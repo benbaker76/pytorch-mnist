@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pytorch-mnist
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pytorch-mnist
+  template:
+    metadata:
+      labels:
+        app: pytorch-mnist
+    spec:
+      containers:
+        - name: pytorch-mnist
+          image: docker.io/benbaker76/pytorch-mnist:latest
+          command:
+            - python3
+          args:
+            - /work/train.py
+          resources:
+            requests:
+              nvidia.com/gpu: 1
+            limits:
+              nvidia.com/gpu: 1
